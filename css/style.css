@@ -1,0 +1,340 @@
+/*body*/
+body{
+    margin: 0;
+    padding: 0;
+    color: rgb(78, 78, 78);
+}
+
+h3{
+    font-size: 16px;
+}
+/*header*/
+
+
+header{
+    color: white;
+    text-align: center
+} 
+
+#background{
+    position: relative;
+    min-width: 100%;
+    max-height: 100%;
+    z-index: -1;
+    
+}
+
+h1{
+    position: absolute;
+    margin-top: -380px;
+    margin-left:300px;
+    z-index: 5;
+    font-size: 46px;
+}
+
+.bouton{
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 50%;
+    margin-top: -250px;
+    margin-left: 250px;
+    font-size: 18px;
+
+}
+
+.bot1{
+    width: 362px;
+    height: 60px;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    font-size: 18px;
+    border-radius: 2px;
+    border: 2px solid white;
+}
+
+.bot2{
+    width: 362px;
+    height: 60px;
+    color: white;
+    background-color: transparent;
+    font-size: 18px;
+    border: 2px solid white;
+    border-radius: 2px;
+
+}
+
+.logo{
+    position: absolute;
+    width: 30px;
+    height: 40px;
+    margin-top: 17px;
+    margin-left: 29px;
+}
+/*fin Header*/
+/*section*/
+
+section{
+    width: 60%;
+    margin: auto;
+}
+
+/*nav*/
+.chat{
+    font-size: 12px;
+}
+
+.back{
+    background-color: white;
+    border: 1px solid rgb(182, 182, 182);
+    border-radius: 2px;
+}
+
+.Recherche{
+    background-color:rgb(219, 64, 64);
+    color: white;
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 2%
+}
+
+.Col1R1{
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.Col1R2{
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.Col2R1{
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.Col2R2{
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.Col3R1{
+    grid-column: 3;
+    grid-row: 1;
+}
+
+.Col3R2{
+    grid-column: 3;
+    grid-row: 2;
+}
+
+.Col4R1{
+    grid-column: 4;
+    grid-row: 1;
+}
+
+.Col4R2{
+    grid-column: 4;
+    grid-row: 2;
+}
+
+.Col5R1{
+    grid-column: 5;
+    grid-row: 1;
+}
+
+.Col5R2{
+    grid-column: 5;
+    grid-row: 2;
+}
+
+.Col6R2{
+    grid-column: 6;
+    grid-row: 2;
+}
+
+nav{
+    border-bottom: 50px solid white;
+}
+
+/*finNav */
+/*Article*/
+
+.star{
+    width: 24px;
+    height: 24px;
+}
+
+.photo{
+    width: 360px
+}
+
+.grid2{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 222.217px  45px 1fr 1fr;
+    grid-gap: 2%;
+}
+
+.etoiles{
+    width: 22px;
+    height: 22px;
+}
+
+.para{
+    font-size: 14px;
+}
+
+.face{
+    width: 46px;
+    height: 46px;
+    border-radius: 50px;
+    vertical-align: middle
+}
+
+.noms{
+    text-align: left;
+}
+
+/*Fin Article*/
+/*Article2*/
+
+.top{
+    margin-top: 60px
+}
+
+.grid3{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 30px 1fr;
+    grid-gap: 2%
+}
+
+.img2{
+    width: 37.3px;
+    height: 32.9px
+}
+
+.grid4{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-gap: 3%;
+
+}
+
+.lit{
+    width: 246px;
+    height: 164px;
+
+}
+
+.p1{
+    font-size: 11px;
+    color: rgb(129, 127, 127);
+}
+
+
+.p3{
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.p4{
+    font-weight: normal;
+    font-size: 12px;
+}
+
+.note{
+    width: 10px;
+    height: 10px;
+}
+
+.suite{
+    font-size: 17px;
+    color: rgb(219, 147, 12);
+}
+/*finArticle*/
+/*article3*/
+.toi{
+    font-size: 16px;
+}
+
+.bot5{
+    font-size: 18px;
+    height: 48px;
+    width: 200px;
+    background-color: rgb(219, 147, 12);
+    color: white;
+    border: 2px solid white;
+    border-radius: 2px;
+}
+/*FinArticle3*/
+/*FinSection*/
+/*Footer*/
+/*Section*/
+
+.grid5{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.foot{
+    font-size: 14px;
+}
+
+.rs{
+    width: 18px;
+    height: 18px;
+}
+
+.RS{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-gap: 0%
+}
+
+.but6{
+    width: 64px;
+    height: 18px;
+    background-color: rgb(219, 147, 12);
+    color: white;
+    border: 1px solid white;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+/*Footer2*/
+
+.fin{
+    width: 60%;
+    margin: auto;
+}
+
+.grid6{
+    display: flex;
+    justify-content: space-between;
+}
+
+.vrm{
+    color: rgb(151, 145, 145);
+    font-size: 14px;
+}
+
+.img3{
+    width: 15px;
+    height: 15px;
+}
+
+.img4{
+    width: 1.5em;
+    height: 1.5em;
+    color: black;
+}
