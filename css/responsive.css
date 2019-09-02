@@ -1,3 +1,8 @@
+@media(max-width:375px)
+{
+
+
+
 .wrappr{
     width:auto;
     text-align: left;
@@ -35,4 +40,5 @@ section{
 
 .fin{
     width: 85vw;
+}
 }
