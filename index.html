@@ -64,7 +64,6 @@
       transform: scale(0.96);
     }
 
-    /* ========== INTRO SCREEN ========== */
     .logo {
       font-size: 72px;
       animation: float 3s ease-in-out infinite;
@@ -199,7 +198,6 @@
     }
     .btn-secondary:active { transform: scale(0.96); background: rgba(255,255,255,0.12); }
 
-    /* ========== WAITING SCREEN ========== */
     .player-badge {
       width: 90px;
       height: 90px;
@@ -254,7 +252,6 @@
     .reveal-btn:active { transform: scale(0.94) !important; animation: none; }
     .reveal-btn .eye { font-size: 36px; }
 
-    /* ========== REVEAL SCREEN ========== */
     .reveal-header {
       text-align: center;
       font-size: 13px;
@@ -381,7 +378,6 @@
       letter-spacing: 1px;
     }
 
-    /* ========== GAME ON SCREEN ========== */
     .gameon-icon { font-size: 72px; animation: float 3s ease-in-out infinite; }
     .gameon-title {
       font-size: 32px;
@@ -546,7 +542,6 @@
 </div>
 
 <script>
-  // Starfield
   const bg = document.getElementById('bg');
   for (let i = 0; i < 60; i++) {
     const s = document.createElement('div');
@@ -574,7 +569,7 @@
     { a:{name:"Shrek",emoji:"🧅"},          b:{name:"Donkey",emoji:"🐴"} },
     { a:{name:"Deadpool",emoji:"🗡️"},       b:{name:"Wolverine",emoji:"🐺"} },
     { a:{name:"Pikachu",emoji:"⚡"},        b:{name:"Stitch",emoji:"💙"} },
-    { a:{name:"Jack Sparrow",emoji:"🏴‍☠️"},  b:{name:"Will Turner",emoji:"⚓"} },
+    { a:{name:"Jack Sparrow",emoji:"🏴\u200d☠️"},  b:{name:"Will Turner",emoji:"⚓"} },
     { a:{name:"Gollum",emoji:"💍"},         b:{name:"Dobby",emoji:"🧦"} },
   ];
 
