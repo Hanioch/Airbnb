@@ -64,6 +64,7 @@
       transform: scale(0.96);
     }
 
+    /* ========== INTRO SCREEN ========== */
     .logo {
       font-size: 72px;
       animation: float 3s ease-in-out infinite;
@@ -198,6 +199,7 @@
     }
     .btn-secondary:active { transform: scale(0.96); background: rgba(255,255,255,0.12); }
 
+    /* ========== WAITING SCREEN ========== */
     .player-badge {
       width: 90px;
       height: 90px;
@@ -252,6 +254,7 @@
     .reveal-btn:active { transform: scale(0.94) !important; animation: none; }
     .reveal-btn .eye { font-size: 36px; }
 
+    /* ========== REVEAL SCREEN ========== */
     .reveal-header {
       text-align: center;
       font-size: 13px;
@@ -378,6 +381,7 @@
       letter-spacing: 1px;
     }
 
+    /* ========== GAME ON SCREEN ========== */
     .gameon-icon { font-size: 72px; animation: float 3s ease-in-out infinite; }
     .gameon-title {
       font-size: 32px;
@@ -471,15 +475,6 @@
     <div class="undercover-note" id="undercover-note">1 joueur sera <span>Undercover</span></div>
   </div>
 
-  <div class="pair-preview">
-    <div class="pair-label">Duo du moment</div>
-    <div class="pair-names">
-      <span class="pair-name-a" id="name-a">—</span>
-      <span class="pair-vs">VS</span>
-      <span class="pair-name-b" id="name-b">—</span>
-    </div>
-  </div>
-
   <button class="btn-primary" id="btn-start">Lancer la partie 🚀</button>
 </div>
 
@@ -542,6 +537,7 @@
 </div>
 
 <script>
+  // Starfield
   const bg = document.getElementById('bg');
   for (let i = 0; i < 60; i++) {
     const s = document.createElement('div');
@@ -552,25 +548,42 @@
   }
 
   const PAIRS = [
-    { a:{name:"Batman",emoji:"🦇"},        b:{name:"Spider-Man",emoji:"🕷️"} },
-    { a:{name:"Hermione",emoji:"🪄"},       b:{name:"Katniss Everdeen",emoji:"🏹"} },
-    { a:{name:"Darth Vader",emoji:"⚔️"},    b:{name:"Voldemort",emoji:"🐍"} },
-    { a:{name:"Mario",emoji:"🍄"},          b:{name:"Sonic",emoji:"💨"} },
-    { a:{name:"Harry Potter",emoji:"⚡"},   b:{name:"Percy Jackson",emoji:"🔱"} },
-    { a:{name:"James Bond",emoji:"🔫"},     b:{name:"Ethan Hunt",emoji:"💣"} },
-    { a:{name:"Elsa",emoji:"❄️"},           b:{name:"Rapunzel",emoji:"🌸"} },
-    { a:{name:"Gandalf",emoji:"🧙"},        b:{name:"Dumbledore",emoji:"🦅"} },
-    { a:{name:"Indiana Jones",emoji:"🤠"},  b:{name:"Lara Croft",emoji:"💎"} },
-    { a:{name:"Le Joker",emoji:"🃏"},       b:{name:"Loki",emoji:"🐍"} },
-    { a:{name:"Captain America",emoji:"🛡️"},b:{name:"Superman",emoji:"🦸"} },
-    { a:{name:"Sherlock Holmes",emoji:"🔍"},b:{name:"Hercule Poirot",emoji:"🧐"} },
-    { a:{name:"Tony Stark",emoji:"🤖"},     b:{name:"Elon Musk",emoji:"🚀"} },
-    { a:{name:"Simba",emoji:"🦁"},          b:{name:"Bambi",emoji:"🦌"} },
-    { a:{name:"Shrek",emoji:"🧅"},          b:{name:"Donkey",emoji:"🐴"} },
-    { a:{name:"Deadpool",emoji:"🗡️"},       b:{name:"Wolverine",emoji:"🐺"} },
-    { a:{name:"Pikachu",emoji:"⚡"},        b:{name:"Stitch",emoji:"💙"} },
-    { a:{name:"Jack Sparrow",emoji:"🏴\u200d☠️"},  b:{name:"Will Turner",emoji:"⚓"} },
-    { a:{name:"Gollum",emoji:"💍"},         b:{name:"Dobby",emoji:"🧦"} },
+    // Pop culture occidentale
+    { a:{name:"Batman",emoji:"🦇"},          b:{name:"Spider-Man",emoji:"🕷️"} },
+    { a:{name:"Hermione",emoji:"🪄"},         b:{name:"Katniss Everdeen",emoji:"🏹"} },
+    { a:{name:"Darth Vader",emoji:"⚔️"},      b:{name:"Voldemort",emoji:"🐍"} },
+    { a:{name:"Mario",emoji:"🍄"},            b:{name:"Sonic",emoji:"💨"} },
+    { a:{name:"Harry Potter",emoji:"⚡"},     b:{name:"Percy Jackson",emoji:"🔱"} },
+    { a:{name:"James Bond",emoji:"🔫"},       b:{name:"Ethan Hunt",emoji:"💣"} },
+    { a:{name:"Elsa",emoji:"❄️"},             b:{name:"Rapunzel",emoji:"🌸"} },
+    { a:{name:"Gandalf",emoji:"🧙"},          b:{name:"Dumbledore",emoji:"🦅"} },
+    { a:{name:"Indiana Jones",emoji:"🤠"},    b:{name:"Lara Croft",emoji:"💎"} },
+    { a:{name:"Le Joker",emoji:"🃏"},         b:{name:"Loki",emoji:"🐍"} },
+    { a:{name:"Captain America",emoji:"🛡️"},  b:{name:"Superman",emoji:"🦸"} },
+    { a:{name:"Sherlock Holmes",emoji:"🔍"},  b:{name:"Hercule Poirot",emoji:"🧐"} },
+    { a:{name:"Tony Stark",emoji:"🤖"},       b:{name:"Elon Musk",emoji:"🚀"} },
+    { a:{name:"Simba",emoji:"🦁"},            b:{name:"Bambi",emoji:"🦌"} },
+    { a:{name:"Shrek",emoji:"🧅"},            b:{name:"Donkey",emoji:"🐴"} },
+    { a:{name:"Deadpool",emoji:"🗡️"},         b:{name:"Wolverine",emoji:"🐺"} },
+    { a:{name:"Jack Sparrow",emoji:"🏴‍☠️"},    b:{name:"Will Turner",emoji:"⚓"} },
+    { a:{name:"Gollum",emoji:"💍"},           b:{name:"Dobby",emoji:"🧦"} },
+    // Manga / Anime
+    { a:{name:"Naruto",emoji:"🍥"},           b:{name:"Goku",emoji:"🐉"} },
+    { a:{name:"Luffy",emoji:"🏴‍☠️"},           b:{name:"Naruto",emoji:"🍥"} },
+    { a:{name:"Sasuke",emoji:"🌑"},           b:{name:"Vegeta",emoji:"👑"} },
+    { a:{name:"Goku",emoji:"🐉"},             b:{name:"Saitama",emoji:"👊"} },
+    { a:{name:"Light Yagami",emoji:"📓"},     b:{name:"Lelouch",emoji:"♟️"} },
+    { a:{name:"Eren Jäger",emoji:"⚙️"},       b:{name:"Guts",emoji:"⚔️"} },
+    { a:{name:"Zoro",emoji:"🗡️"},             b:{name:"Kenshin",emoji:"🌸"} },
+    { a:{name:"Levi Ackerman",emoji:"⚡"},    b:{name:"Killua",emoji:"⚡"} },
+    { a:{name:"Itachi",emoji:"🪶"},           b:{name:"Aizen",emoji:"🌙"} },
+    { a:{name:"Luffy",emoji:"🏴‍☠️"},           b:{name:"Ace",emoji:"🔥"} },
+    { a:{name:"Pikachu",emoji:"⚡"},          b:{name:"Totoro",emoji:"🌿"} },
+    { a:{name:"Spirited Away",emoji:"🛁"},    b:{name:"Mononoke",emoji:"🐺"} },
+    { a:{name:"Edward Elric",emoji:"⚗️"},     b:{name:"Alphonse Elric",emoji:"🛡️"} },
+    { a:{name:"Deku",emoji:"💚"},             b:{name:"Naruto",emoji:"🍥"} },
+    { a:{name:"Tanjiro",emoji:"🌊"},          b:{name:"Deku",emoji:"💚"} },
+    { a:{name:"L",emoji:"🍰"},               b:{name:"Light Yagami",emoji:"📓"} },
   ];
 
   let numPlayers = 5;
@@ -593,8 +606,6 @@
 
   function pickRandomPair() {
     currentPair = PAIRS[Math.floor(Math.random() * PAIRS.length)];
-    document.getElementById('name-a').textContent = currentPair.a.name;
-    document.getElementById('name-b').textContent = currentPair.b.name;
   }
   pickRandomPair();
 
