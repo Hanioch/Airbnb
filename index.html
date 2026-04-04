@@ -420,6 +420,55 @@
     .btn-row { display: flex; gap: 12px; width: 100%; max-width: 320px; }
     .btn-row .btn-primary { flex: 1; }
 
+    .order-card {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 16px 20px;
+      width: 100%;
+      max-width: 320px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .order-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .order-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.04);
+      animation: slide-in 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes slide-in {
+      from { opacity: 0; transform: translateX(-16px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    .order-pos {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 800; flex-shrink: 0;
+    }
+    .order-name { font-size: 15px; font-weight: 600; }
+    .btn-shuffle {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px dashed rgba(255,255,255,0.2);
+      background: transparent;
+      color: rgba(255,255,255,0.6);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-shuffle:active { background: rgba(255,255,255,0.06); transform: scale(0.97); }
+
     .burst {
       position: fixed;
       inset: 0;
@@ -475,6 +524,15 @@
     <div class="undercover-note" id="undercover-note">1 joueur sera <span>Undercover</span></div>
   </div>
 
+  <div class="pair-preview">
+    <div class="pair-label">Duo du moment</div>
+    <div class="pair-names">
+      <span class="pair-name-a" id="name-a">—</span>
+      <span class="pair-vs">VS</span>
+      <span class="pair-name-b" id="name-b">—</span>
+    </div>
+  </div>
+
   <button class="btn-primary" id="btn-start">Lancer la partie 🚀</button>
 </div>
 
@@ -519,15 +577,12 @@
 
 <!-- GAME ON -->
 <div class="screen hidden" id="screen-gameon">
-  <div class="gameon-icon">🎮</div>
   <div class="gameon-title">À vous de jouer !</div>
-  <div class="gameon-sub">Tout le monde a vu son personnage.<br>L'un d'entre vous est l'imposteur…</div>
+  <div class="gameon-sub">Ordre de passage tiré au sort :</div>
 
-  <div class="rules-card">
-    <div class="rules-title">Comment jouer</div>
-    <div class="rule"><div class="rule-num">1</div><div>Chaque joueur décrit son personnage en <strong>un mot ou une phrase</strong>, sans le nommer.</div></div>
-    <div class="rule"><div class="rule-num">2</div><div>Votez pour éliminer celui qui semble avoir un personnage <strong>différent</strong>.</div></div>
-    <div class="rule"><div class="rule-num">3</div><div>L'<strong>Undercover</strong> gagne s'il n'est pas éliminé ou s'il devine le vrai personnage.</div></div>
+  <div class="order-card">
+    <div class="order-list" id="order-list"></div>
+    <button class="btn-shuffle" id="btn-shuffle">🔀 Nouvel ordre</button>
   </div>
 
   <div class="btn-row">
@@ -548,42 +603,25 @@
   }
 
   const PAIRS = [
-    // Pop culture occidentale
-    { a:{name:"Batman",emoji:"🦇"},          b:{name:"Spider-Man",emoji:"🕷️"} },
-    { a:{name:"Hermione",emoji:"🪄"},         b:{name:"Katniss Everdeen",emoji:"🏹"} },
-    { a:{name:"Darth Vader",emoji:"⚔️"},      b:{name:"Voldemort",emoji:"🐍"} },
-    { a:{name:"Mario",emoji:"🍄"},            b:{name:"Sonic",emoji:"💨"} },
-    { a:{name:"Harry Potter",emoji:"⚡"},     b:{name:"Percy Jackson",emoji:"🔱"} },
-    { a:{name:"James Bond",emoji:"🔫"},       b:{name:"Ethan Hunt",emoji:"💣"} },
-    { a:{name:"Elsa",emoji:"❄️"},             b:{name:"Rapunzel",emoji:"🌸"} },
-    { a:{name:"Gandalf",emoji:"🧙"},          b:{name:"Dumbledore",emoji:"🦅"} },
-    { a:{name:"Indiana Jones",emoji:"🤠"},    b:{name:"Lara Croft",emoji:"💎"} },
-    { a:{name:"Le Joker",emoji:"🃏"},         b:{name:"Loki",emoji:"🐍"} },
-    { a:{name:"Captain America",emoji:"🛡️"},  b:{name:"Superman",emoji:"🦸"} },
-    { a:{name:"Sherlock Holmes",emoji:"🔍"},  b:{name:"Hercule Poirot",emoji:"🧐"} },
-    { a:{name:"Tony Stark",emoji:"🤖"},       b:{name:"Elon Musk",emoji:"🚀"} },
-    { a:{name:"Simba",emoji:"🦁"},            b:{name:"Bambi",emoji:"🦌"} },
-    { a:{name:"Shrek",emoji:"🧅"},            b:{name:"Donkey",emoji:"🐴"} },
-    { a:{name:"Deadpool",emoji:"🗡️"},         b:{name:"Wolverine",emoji:"🐺"} },
-    { a:{name:"Jack Sparrow",emoji:"🏴‍☠️"},    b:{name:"Will Turner",emoji:"⚓"} },
-    { a:{name:"Gollum",emoji:"💍"},           b:{name:"Dobby",emoji:"🧦"} },
-    // Manga / Anime
-    { a:{name:"Naruto",emoji:"🍥"},           b:{name:"Goku",emoji:"🐉"} },
-    { a:{name:"Luffy",emoji:"🏴‍☠️"},           b:{name:"Naruto",emoji:"🍥"} },
-    { a:{name:"Sasuke",emoji:"🌑"},           b:{name:"Vegeta",emoji:"👑"} },
-    { a:{name:"Goku",emoji:"🐉"},             b:{name:"Saitama",emoji:"👊"} },
-    { a:{name:"Light Yagami",emoji:"📓"},     b:{name:"Lelouch",emoji:"♟️"} },
-    { a:{name:"Eren Jäger",emoji:"⚙️"},       b:{name:"Guts",emoji:"⚔️"} },
-    { a:{name:"Zoro",emoji:"🗡️"},             b:{name:"Kenshin",emoji:"🌸"} },
-    { a:{name:"Levi Ackerman",emoji:"⚡"},    b:{name:"Killua",emoji:"⚡"} },
-    { a:{name:"Itachi",emoji:"🪶"},           b:{name:"Aizen",emoji:"🌙"} },
-    { a:{name:"Luffy",emoji:"🏴‍☠️"},           b:{name:"Ace",emoji:"🔥"} },
-    { a:{name:"Pikachu",emoji:"⚡"},          b:{name:"Totoro",emoji:"🌿"} },
-    { a:{name:"Spirited Away",emoji:"🛁"},    b:{name:"Mononoke",emoji:"🐺"} },
-    { a:{name:"Edward Elric",emoji:"⚗️"},     b:{name:"Alphonse Elric",emoji:"🛡️"} },
-    { a:{name:"Deku",emoji:"💚"},             b:{name:"Naruto",emoji:"🍥"} },
-    { a:{name:"Tanjiro",emoji:"🌊"},          b:{name:"Deku",emoji:"💚"} },
-    { a:{name:"L",emoji:"🍰"},               b:{name:"Light Yagami",emoji:"📓"} },
+    { a:{name:"Batman",emoji:"🦇"},        b:{name:"Spider-Man",emoji:"🕷️"} },
+    { a:{name:"Hermione",emoji:"🪄"},       b:{name:"Katniss Everdeen",emoji:"🏹"} },
+    { a:{name:"Darth Vader",emoji:"⚔️"},    b:{name:"Voldemort",emoji:"🐍"} },
+    { a:{name:"Mario",emoji:"🍄"},          b:{name:"Sonic",emoji:"💨"} },
+    { a:{name:"Harry Potter",emoji:"⚡"},   b:{name:"Percy Jackson",emoji:"🔱"} },
+    { a:{name:"James Bond",emoji:"🔫"},     b:{name:"Ethan Hunt",emoji:"💣"} },
+    { a:{name:"Elsa",emoji:"❄️"},           b:{name:"Rapunzel",emoji:"🌸"} },
+    { a:{name:"Gandalf",emoji:"🧙"},        b:{name:"Dumbledore",emoji:"🦅"} },
+    { a:{name:"Indiana Jones",emoji:"🤠"},  b:{name:"Lara Croft",emoji:"💎"} },
+    { a:{name:"Le Joker",emoji:"🃏"},       b:{name:"Loki",emoji:"🐍"} },
+    { a:{name:"Captain America",emoji:"🛡️"},b:{name:"Superman",emoji:"🦸"} },
+    { a:{name:"Sherlock Holmes",emoji:"🔍"},b:{name:"Hercule Poirot",emoji:"🧐"} },
+    { a:{name:"Tony Stark",emoji:"🤖"},     b:{name:"Elon Musk",emoji:"🚀"} },
+    { a:{name:"Simba",emoji:"🦁"},          b:{name:"Bambi",emoji:"🦌"} },
+    { a:{name:"Shrek",emoji:"🧅"},          b:{name:"Donkey",emoji:"🐴"} },
+    { a:{name:"Deadpool",emoji:"🗡️"},       b:{name:"Wolverine",emoji:"🐺"} },
+    { a:{name:"Pikachu",emoji:"⚡"},        b:{name:"Stitch",emoji:"💙"} },
+    { a:{name:"Jack Sparrow",emoji:"🏴‍☠️"},  b:{name:"Will Turner",emoji:"⚓"} },
+    { a:{name:"Gollum",emoji:"💍"},         b:{name:"Dobby",emoji:"🧦"} },
   ];
 
   let numPlayers = 5;
@@ -606,6 +644,8 @@
 
   function pickRandomPair() {
     currentPair = PAIRS[Math.floor(Math.random() * PAIRS.length)];
+    document.getElementById('name-a').textContent = currentPair.a.name;
+    document.getElementById('name-b').textContent = currentPair.b.name;
   }
   pickRandomPair();
 
@@ -698,7 +738,10 @@
         clearInterval(countdownTimer);
         spawnParticles();
         currentPlayer++;
-        setTimeout(() => currentPlayer >= numPlayers ? showScreen('gameon') : showWaiting(), 400);
+        setTimeout(() => {
+          if (currentPlayer >= numPlayers) { shuffleOrder(); showScreen('gameon'); }
+          else showWaiting();
+        }, 400);
       }
     }, 1000);
   }
@@ -719,6 +762,22 @@
     }
     setTimeout(() => burst.remove(), 1200);
   }
+
+  function shuffleOrder() {
+    const order = Array.from({length: numPlayers}, (_, i) => i + 1)
+      .sort(() => Math.random() - 0.5);
+    const list = document.getElementById('order-list');
+    list.innerHTML = '';
+    order.forEach((player, pos) => {
+      const item = document.createElement('div');
+      item.className = 'order-item';
+      item.style.animationDelay = `${pos * 0.05}s`;
+      item.innerHTML = `<div class="order-pos">${pos + 1}</div><div class="order-name">Joueur ${player}</div>`;
+      list.appendChild(item);
+    });
+  }
+
+  document.getElementById('btn-shuffle').addEventListener('click', shuffleOrder);
 
   document.getElementById('btn-newgame').addEventListener('click', () => {
     showScreen('intro');
