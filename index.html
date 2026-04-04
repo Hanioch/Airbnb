@@ -1,294 +1,732 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Rbnb</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#0f0f1a">
+  <title>Undercover — Pop Culture</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    :root {
+      --purple: #7c3aed;
+      --pink: #ec4899;
+      --blue: #3b82f6;
+      --dark: #0f0f1a;
+      --card: #1a1a2e;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--dark);
+      color: #fff;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.6);
+      animation: twinkle linear infinite;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.4); }
+    }
+
+    .screen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 10;
+      transition: opacity 0.4s, transform 0.4s;
+      gap: 24px;
+    }
+    .screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.96);
+    }
+
+    /* ========== INTRO SCREEN ========== */
+    .logo {
+      font-size: 72px;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    .title {
+      font-size: 36px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -1px;
+      text-align: center;
+    }
+    .subtitle {
+      font-size: 15px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+      max-width: 280px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .players-section {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 20px 28px;
+      width: 100%;
+      max-width: 320px;
+    }
+    .players-label {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .players-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .count-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      font-size: 22px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .count-btn:active { transform: scale(0.9); background: rgba(255,255,255,0.12); }
+    .count-display {
+      font-size: 48px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      min-width: 60px;
+      text-align: center;
+    }
+    .undercover-note {
+      margin-top: 14px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+    }
+    .undercover-note span { color: var(--pink); font-weight: 600; }
+
+    .pair-preview {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 18px 24px;
+      width: 100%;
+      max-width: 320px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .pair-label { font-size: 12px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+    .pair-names {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .pair-vs { color: var(--pink); font-size: 12px; }
+    .pair-name-a { color: var(--blue); }
+    .pair-name-b { color: var(--purple); }
+
+    .btn-primary {
+      width: 100%;
+      max-width: 320px;
+      padding: 18px;
+      border-radius: 16px;
+      border: none;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+      box-shadow: 0 8px 32px rgba(124,58,237,0.4);
+      letter-spacing: 0.3px;
+    }
+    .btn-primary:active { transform: scale(0.97); box-shadow: 0 4px 16px rgba(124,58,237,0.3); }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.7);
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-secondary:active { transform: scale(0.96); background: rgba(255,255,255,0.12); }
+
+    /* ========== WAITING SCREEN ========== */
+    .player-badge {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      font-weight: 800;
+      box-shadow: 0 0 40px rgba(124,58,237,0.5);
+      animation: pulse-badge 2s ease-in-out infinite;
+    }
+    @keyframes pulse-badge {
+      0%, 100% { box-shadow: 0 0 40px rgba(124,58,237,0.5); }
+      50% { box-shadow: 0 0 60px rgba(124,58,237,0.8), 0 0 80px rgba(236,72,153,0.3); }
+    }
+    .waiting-title {
+      font-size: 28px;
+      font-weight: 800;
+      text-align: center;
+    }
+    .waiting-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.45);
+      max-width: 260px;
+      text-align: center;
+    }
+    .reveal-btn {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 8px 48px rgba(124,58,237,0.5);
+      transition: all 0.15s;
+      animation: breathe 2.5s ease-in-out infinite;
+    }
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+    }
+    .reveal-btn:active { transform: scale(0.94) !important; animation: none; }
+    .reveal-btn .eye { font-size: 36px; }
+
+    /* ========== REVEAL SCREEN ========== */
+    .reveal-header {
+      text-align: center;
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .card-wrap {
+      perspective: 800px;
+      width: 100%;
+      max-width: 320px;
+    }
+    .card {
+      width: 100%;
+      border-radius: 24px;
+      background: linear-gradient(135deg, var(--card), #16213e);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+      animation: card-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    @keyframes card-in {
+      from { transform: rotateY(-90deg) scale(0.8); opacity: 0; }
+      to { transform: rotateY(0deg) scale(1); opacity: 1; }
+    }
+
+    .role-tag {
+      display: inline-block;
+      padding: 5px 14px;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+    .role-tag.citizen {
+      background: rgba(59,130,246,0.2);
+      color: var(--blue);
+      border: 1px solid rgba(59,130,246,0.3);
+    }
+    .role-tag.undercover {
+      background: rgba(236,72,153,0.2);
+      color: var(--pink);
+      border: 1px solid rgba(236,72,153,0.4);
+      animation: glow-tag 1.5s ease-in-out infinite;
+    }
+    @keyframes glow-tag {
+      0%, 100% { box-shadow: none; }
+      50% { box-shadow: 0 0 16px rgba(236,72,153,0.4); }
+    }
+
+    .char-emoji { font-size: 64px; margin-bottom: 12px; display: block; animation: pop 0.4s 0.3s cubic-bezier(0.34,1.56,0.64,1) both; }
+    @keyframes pop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    .char-name {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .char-hint {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.5;
+    }
+    .char-hint strong { color: rgba(255,255,255,0.65); }
+
+    .shimmer {
+      background: linear-gradient(90deg, #fff 0%, #a78bfa 40%, #f472b6 60%, #fff 100%);
+      background-size: 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 2s linear infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% center; }
+      100% { background-position: -200% center; }
+    }
+
+    .countdown-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .countdown-ring {
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+    .countdown-ring svg {
+      transform: rotate(-90deg);
+      width: 80px;
+      height: 80px;
+    }
+    .ring-bg { fill: none; stroke: rgba(255,255,255,0.08); stroke-width: 5; }
+    .ring-fg {
+      fill: none;
+      stroke: var(--purple);
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-dasharray: 220;
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 1s linear, stroke 0.5s;
+    }
+    .ring-num {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 800;
+    }
+    .countdown-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ========== GAME ON SCREEN ========== */
+    .gameon-icon { font-size: 72px; animation: float 3s ease-in-out infinite; }
+    .gameon-title {
+      font-size: 32px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #facc15, var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+    }
+    .gameon-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.5);
+      max-width: 280px;
+      line-height: 1.7;
+      text-align: center;
+    }
+    .rules-card {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 20px;
+      width: 100%;
+      max-width: 320px;
+      text-align: left;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .rules-title { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.35); margin-bottom: 14px; }
+    .rule { display: flex; gap: 12px; margin-bottom: 12px; font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.5; }
+    .rule:last-child { margin-bottom: 0; }
+    .rule-num {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+    }
+    .btn-row { display: flex; gap: 12px; width: 100%; max-width: 320px; }
+    .btn-row .btn-primary { flex: 1; }
+
+    .burst {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 100;
+    }
+    .particle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      animation: burst-out 0.8s ease-out forwards;
+    }
+    @keyframes burst-out {
+      from { transform: translate(0, 0) scale(1); opacity: 1; }
+      to { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
+    }
+
+    .progress-dots {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      transition: all 0.3s;
+    }
+    .dot.done { background: var(--purple); }
+    .dot.active { background: var(--pink); transform: scale(1.4); }
+  </style>
 </head>
-
 <body>
-    <header>
-        <div class="wrappr">
-        <img src="img/airbnb.svg" alt="logo" class="logo">
-        <img id="background" src="img/backgroundheader.jpg" alt="background">
-        <h1>Réservez un séjour. Accueillez des <br> voyageurs. Directement sur Airbnb.</h1>
-        <div class="bouton">
-            <div class="bouton1">
-                <p>Trouvez des logements et des activités</p>
-                <button class="bot1"> <strong>Explorer</strong> </button>
-            </div>
-            <div class="bouton2">
-                <p>Réservez un séjour</p>
-                <button class="bot2"><strong>Acceuillir</strong></button>
-            </div>
-        </div>
-    </header>
-    <!--<div>
-    </div>-->
-    <section>
-        <nav>
-            <h2>Réservez des logements et des expériences uniques</h2>
-            <form class="grid" action="#">
-                <h3 class="Col1R1 chat">OÙ</h3>
-                <input type="text" placeholder="Partout" class="Col1R2 back">
-                <h3 class="Col2R1 chat">ARRIVÉE</h3>
-                <input type="date" class="Col2R2 back">
-                <h3 class="Col3R1 chat">DÉPART</h3>
-                <input type="date" class="Col3R2 back">
-                <h3 class="Col4R1 chat">ADULTES</h3>
-                <select name="adultes" class="Col4R2 back">
-                    <option value="">1 adulte</option>
-                    <option value="">2 adultes</option>
-                    <option value="">3 adultes</option>
-                    <option value="">4 adultes</option>
-                    <option value="">5 adultes</option>
-                </select>
-                <h3 class="Col5R1 chat">ENFANTS</h3>
-                <select name="enfants" class="Col5R2 back">
-                    <option value="">1 enfant</option>
-                    <option value="">2 enfants</option>
-                    <option value="">3 enfants</option>
-                    <option value="">4 enfants</option>
-                    <option value="">5 enfants</option>
-                </select>
-                <button class="Col6R2 back Recherche">Recherche</button>
-            </form>
-        </nav>
-        <article>
-            <h2>Belgique : ce que les autres voyageurs ont pensé de leur logement</h2>
-            <p> <img src="img/star.svg" alt="stars" class="star"> Les logements de Belgique ont obtenu <strong>4.6
-                    étoiles sur 5</strong> et plus de <strong>950.000 commentaires</strong></p>
-            <div class="grid2">
-                <img src="https://a0.muscache.com/im/pictures/f107cb95-2b41-4f9f-a145-e9951e84bc5f.jpg?aki_policy=large"
-                    alt="schtrompf" class="Col1R1 photo">
-                <p class="Col1R2"> <img src="img/favourites.svg" alt="etoiles" class="etoiles">
-                    <img src="img/favourites.svg" alt="etoiles" class="etoiles">
-                    <img src="img/favourites.svg" alt="etoiles" class="etoiles">
-                    <img src="img/favourites.svg" alt="etoiles" class="etoiles">
-                    <img src="img/favourites.svg" alt="etoiles" class="etoiles">
-                </p>
-                <img src="https://a0.muscache.com/im/pictures/4f243530-c813-481c-b662-03b9cf1584f8.jpg?aki_policy=large"
-                    alt="lit" class="Col2R1 photo">
-                <p class="Col2R2"> <img src="img/favourites.svg" alt="etoiles" class="etoiles">
-                    <img src="img/favourites.svg" alt="etoiles" class="etoiles">
-                    <img src="img/favourites.svg" alt="etoiles" class="etoiles">
-                    <img src="img/favourites.svg" alt="etoiles" class="etoiles">
-                    <img src="img/favourites.svg" alt="etoiles" class="etoiles">
-                </p>
-                <img src="https://a0.muscache.com/im/pictures/77757d1a-067b-4361-932a-c6b2dc0b2e03.jpg?aki_policy=large"
-                    alt="toit" class="Col3R1 photo">
-                <p class="Col3R2"> <img src="img/favourites.svg" alt="etoiles" class="etoiles">
-                    <img src="img/favourites.svg" alt="etoiles" class="etoiles">
-                    <img src="img/favourites.svg" alt="etoiles" class="etoiles">
-                    <img src="img/favourites.svg" alt="etoiles" class="etoiles">
-                    <img src="img/favourites.svg" alt="etoiles" class="etoiles">
-                </p>
-                <p class="Col1R3 para">
-                    Appartement parfait, joliment décoré, impeccable, dans le quartier "qui bouge" à Bruxelles. Rapport
-                    qualité prix imbattable. Il ne...
-                </p>
-                <p class="Col2R3 para">
-                    L'accueil par Kévin était vraiment très chaleureux L'appartement est très joli, bien décoré et très
-                    bien situé . Kévin nous a bien...
-                </p>
-                <p class="Col3R3 para">
-                    J'ai passé une nuit chez Greet à l'occasion des fameuses Fêtes de Gand. Celle-ci s'est montrée
-                    adorable; à la fois souriante, discrèt...
-                </p>
-                <div class="Col1R4">
-                    <p>
-                        <img src="https://a0.muscache.com/im/users/4444475/profile_pic/1355937367/original.jpg?aki_policy=large"
-                            alt="tete" class="face">
-                        <span class="noms"> <strong>Jean-Christophe</strong> <br> <br> France</span>
-                    </p>
 
-                </div>
-                <div class="Col2R4">
-                    <p>
-                        <img src="https://a0.muscache.com/im/pictures/ac0624ba-a31e-4ddb-8f4c-b77184a4ddbd.jpg?aki_policy=large"
-                            alt="tete" class="face">
-                        <span class="noms"> <strong>Agnès</strong> <br> <br> France</span>
-                    </p>
-                </div>
-                <div class="Col3R4">
-                    <p>
-                        <img src="https://a0.muscache.com/im/users/8843328/profile_pic/1424681701/original.jpg?aki_policy=large"
-                            alt="tete" class="face">
-                        <span class="noms"> <strong>Emilie</strong> <br> <br> France</span>
-                    </p>
-                </div>
-            </div>
-        </article>
-        <article>
-            <h2 class="top">
-                Voyager avec Airbnb
-            </h2>
-            <hr>
-            <div class="grid3">
-                <div class="Col1R2">
-                    <img src="img/like.svg" alt="coeur" class="img2">
-                    <h3>Assistance utilisateurs 24h/24</h3>
-                    <p>
-                        Nous sommes là pour vous jour et nuit. Parlez à notre équipe d'assistance où que vous soyez et à
-                        toute heure.
-                    </p>
-                </div>
-                <div class="Col2R2">
-                    <img src="img/home.svg" alt="home" class="img2">
-                    <h3>Charte d'hospitalité générale</h3>
-                    <p>
-                        Les voyageurs évaluent leurs hôtes après chaque voyage. Tous les hôtes doivent obtenir une
-                        évaluation minimale et se conformer à notre charte d'hospitalité pour rester sur Airbnb.
-                    </p>
-                </div>
-                <div class="Col3R2">
-                    <img src="img/people.svg" alt="people" class="img2">
-                    <h3>Hôtes 5 étoiles</h3>
-                    <p>
-                        Entre les draps toujours frais et les meilleures recommandations du quartier, l'hospitalité est
-                        une
-                        seconde nature chez les hôtes Airbnb.
-                    </p>
-                </div>
-            </div>
-            <hr>
-            <h2 class="top">Réservé à l'instant à Belgique</h2>
-            <div class="grid4">
-                <div class="Col1R1">
-                    <img src="https://a0.muscache.com/im/pictures/a6a75b0e-bd15-4850-b7ba-cbb6c46defed.jpg?aki_policy=large"
-                        alt="oue" class="lit">
-                    <h5 class="p1">MICROMAISON -OVERIJSE</h5>
-                    <h3 class="p2">Sarabande Genval jacuzzi lake</h3>
-                    <h5 class="p3">€111/nuit</h5>
-                    <h6 class="p4">
-                        <img src="img/favourites.svg" alt="etoiles" class="note">
-                        <img src="img/favourites.svg" alt="etoiles" class="note">
-                        <img src="img/favourites.svg" alt="etoiles" class="note">
-                        <img src="img/favourites.svg" alt="etoiles" class="note">
-                        <img src="img/favourites.svg" alt="etoiles" class="note">
-                        490 ·Superhost
-                    </h6>
-                </div>
-                <div class="Col2R1">
-                    <img src="https://a0.muscache.com/im/pictures/65051810/1ec5a123_original.jpg?aki_policy=large"
-                        alt="lit" class="lit">
-                    <h5 class="p1">LOGEMENT ENTIER -IXELLES</h5>
-                    <h3 class="p2">Saint Boniface Rooftop</h3>
-                    <h5 class="p3">€60/nuit</h5>
-                    <h6 class="p4">
-                        <img src="img/favourites.svg" alt="etoiles" class="note">
-                        <img src="img/favourites.svg" alt="etoiles" class="note">
-                        <img src="img/favourites.svg" alt="etoiles" class="note">
-                        <img src="img/favourites.svg" alt="etoiles" class="note">
-                        <img src="img/favourites.svg" alt="etoiles" class="note">
-                        670 ·Superhost
-                    </h6>
-                </div>
-                <div class="Col3R1">
-                    <img src="https://a0.muscache.com/im/pictures/16740889/9b75b97f_original.jpg?aki_policy=large"
-                        alt="lit" class="lit">
-                    <h5 class="p1">LOGEMENT ENTIER -BRUXELLES</h5>
-                    <h3 class="p2">Voyez Bruxelles comme nous l’aimons !</h3>
-                    <h5 class="p3">€50/nuit</h5>
-                    <h6 class="p4">
-                        <img src="img/favourites.svg" alt="etoiles" class="note">
-                        <img src="img/favourites.svg" alt="etoiles" class="note">
-                        <img src="img/favourites.svg" alt="etoiles" class="note">
-                        <img src="img/favourites.svg" alt="etoiles" class="note">
-                        <img src="img/favourites.svg" alt="etoiles" class="note">
-                        293
-                    </h6>
-                </div>
-                <div class="Col4R1">
-                    <img src="https://a0.muscache.com/im/pictures/ff72c913-b6ec-487d-b6b4-fda1975704a0.jpg?aki_policy=large"
-                        alt="lit" class="lit">
-                    <h5 class="p1">BATEAU -NIEUWPOORT</h5>
-                    <h3 class="p2">HOMEBOAT Glamping La vie sur l´eau</h3>
-                    <h5 class="p3">€150/nuit</h5>
-                    <h6 class="p4">
-                        <img src="img/favourites.svg" alt="etoiles" class="note">
-                        <img src="img/favourites.svg" alt="etoiles" class="note">
-                        <img src="img/favourites.svg" alt="etoiles" class="note">
-                        <img src="img/favourites.svg" alt="etoiles" class="note">
-                        <img src="img/favourites.svg" alt="etoiles" class="note">
-                        86 ·Superhost
-                    </h6>
-                </div>
-            </div>
-            <p class="suite">Afficher les (500+)</p>
-        </article>
-        <article>
-            <h2 class="top">Quand voyagez-vous ?</h2>
-            <p class="toi">Vérifiez la disponibilité et le prix en ajoutant des dates.</p>
-            <button class="bot5">Ajouter des dates </button>
-        </article>
-    </section>
-    <hr>
-    <footer>
-        <section class="grid5">
-            <div class="Col1R1">
-                <h5 class="foot">Airbnb</h5>
-                <p class="foot">
-                    Carrières <br>
-                    Actualités <br>
-                    Règles <br>
-                    Aide <br>
-                    Diversité et intégration <br>
-                    Coordonnées de l'entreprise <br>
-                </p>
-            </div>
-            <div class="Col2R1">
-                <h5 class="foot">Découvrir</h5>
-                <p class="foot">
-                    Confiance et sécurité <br>
-                    Crédito de Viagem <br>
-                    Airbnb Citizen <br>
-                    Voyage d'affaires <br>
-                    Guides <br>
-                    Airbnbmag <br>
-                </p>
-            </div>
-            <div class="Col3R1">
-                <h5 class="foot">Hébergement</h5>
-                <p class="foot">
-                    Pourquoi être hôte <br>
-                    Hospitalité <br>
-                    Hébergement responsable <br>
-                    Community Center <br>
-                    Organiser une expérience <button class="but6">Nouveau</button> <br>
-                    Open Homes <br>
-                </p>
-            </div>
-            <div class="Col4R1">
-                <h5 class="foot">
-                    <div class="RS">
-                        <img src="img/twitter.svg" alt="waw" class="rs Col1R1">
-                        <img src="img/instagram-symbol.svg" alt="waw" class="rs Col2R1">
-                        <img src="img/facebook.svg" alt="waw" class="rs Col3R1">
-                    </div>
-                </h5>
-                <p class="foot">
-                    Conditions <br>
-                    Politique de confidentialité <br>
-                    Plan du site <br>
-                </p>
-            </div>
-        </section>
-        <footer class="fin">
-            <hr>
-            <div class="grid6">
-                <h6 class="vrm"><img src="img/airbnbblack.svg" alt="airbnb" class="img4"> © 2019 Airbnb, Inc. All rights
-                    reserved.</h6>
-                <h6 class="vrm"><img src="img/down-arrow.svg" alt="down" class="img3"> EUR <img
-                        src="img/down-arrow.svg" alt="down" class="img3"></h6>
-            </div>
+<div class="bg" id="bg"></div>
 
-        </footer>
-    </footer>
+<!-- INTRO -->
+<div class="screen" id="screen-intro">
+  <div class="logo">🕵️</div>
+  <div>
+    <div class="title">Undercover</div>
+    <div class="subtitle" style="margin-top:8px">Pop Culture Edition — Trouve l'imposteur parmi vous !</div>
+  </div>
+
+  <div class="players-section">
+    <div class="players-label">Nombre de joueurs</div>
+    <div class="players-row">
+      <button class="count-btn" id="btn-minus">−</button>
+      <div class="count-display" id="player-count">5</div>
+      <button class="count-btn" id="btn-plus">+</button>
+    </div>
+    <div class="undercover-note" id="undercover-note">1 joueur sera <span>Undercover</span></div>
+  </div>
+
+  <div class="pair-preview">
+    <div class="pair-label">Duo du moment</div>
+    <div class="pair-names">
+      <span class="pair-name-a" id="name-a">—</span>
+      <span class="pair-vs">VS</span>
+      <span class="pair-name-b" id="name-b">—</span>
+    </div>
+  </div>
+
+  <button class="btn-primary" id="btn-start">Lancer la partie 🚀</button>
 </div>
-</body>
 
+<!-- WAITING -->
+<div class="screen hidden" id="screen-waiting">
+  <div class="player-badge" id="waiting-badge">1</div>
+  <div>
+    <div class="waiting-title">Joueur <span id="waiting-num">1</span></div>
+    <div class="waiting-sub" style="margin-top:8px">Passe le téléphone. Quand tu es prêt·e, appuie sur le bouton.</div>
+  </div>
+  <div class="progress-dots" id="progress-dots"></div>
+  <button class="reveal-btn" id="btn-reveal">
+    <span class="eye">👁️</span>
+    <span>Voir mon<br>personnage</span>
+  </button>
+</div>
+
+<!-- REVEAL -->
+<div class="screen hidden" id="screen-reveal">
+  <div class="reveal-header" id="reveal-header">Joueur 1 — Lis et mémorise !</div>
+
+  <div class="card-wrap">
+    <div class="card" id="reveal-card">
+      <div class="role-tag citizen" id="role-tag">Citoyen</div>
+      <span class="char-emoji" id="char-emoji">🦸</span>
+      <div class="char-name shimmer" id="char-name">Batman</div>
+      <div class="char-hint">Décris ce personnage <strong>sans dire son nom</strong> ni son univers exact.</div>
+    </div>
+  </div>
+
+  <div class="countdown-wrap">
+    <div class="countdown-ring">
+      <svg viewBox="0 0 80 80">
+        <circle class="ring-bg" cx="40" cy="40" r="35"/>
+        <circle class="ring-fg" cx="40" cy="40" r="35" id="ring-fg"/>
+      </svg>
+      <div class="ring-num" id="ring-num">7</div>
+    </div>
+    <div class="countdown-label">secondes</div>
+  </div>
+</div>
+
+<!-- GAME ON -->
+<div class="screen hidden" id="screen-gameon">
+  <div class="gameon-icon">🎮</div>
+  <div class="gameon-title">À vous de jouer !</div>
+  <div class="gameon-sub">Tout le monde a vu son personnage.<br>L'un d'entre vous est l'imposteur…</div>
+
+  <div class="rules-card">
+    <div class="rules-title">Comment jouer</div>
+    <div class="rule"><div class="rule-num">1</div><div>Chaque joueur décrit son personnage en <strong>un mot ou une phrase</strong>, sans le nommer.</div></div>
+    <div class="rule"><div class="rule-num">2</div><div>Votez pour éliminer celui qui semble avoir un personnage <strong>différent</strong>.</div></div>
+    <div class="rule"><div class="rule-num">3</div><div>L'<strong>Undercover</strong> gagne s'il n'est pas éliminé ou s'il devine le vrai personnage.</div></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-secondary" id="btn-reveal-answers">Voir les rôles</button>
+    <button class="btn-primary" id="btn-newgame">Rejouer</button>
+  </div>
+</div>
+
+<script>
+  // Starfield
+  const bg = document.getElementById('bg');
+  for (let i = 0; i < 60; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 3 + 1;
+    s.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${2+Math.random()*4}s;animation-delay:${Math.random()*4}s;`;
+    bg.appendChild(s);
+  }
+
+  const PAIRS = [
+    { a:{name:"Batman",emoji:"🦇"},        b:{name:"Spider-Man",emoji:"🕷️"} },
+    { a:{name:"Hermione",emoji:"🪄"},       b:{name:"Katniss Everdeen",emoji:"🏹"} },
+    { a:{name:"Darth Vader",emoji:"⚔️"},    b:{name:"Voldemort",emoji:"🐍"} },
+    { a:{name:"Mario",emoji:"🍄"},          b:{name:"Sonic",emoji:"💨"} },
+    { a:{name:"Harry Potter",emoji:"⚡"},   b:{name:"Percy Jackson",emoji:"🔱"} },
+    { a:{name:"James Bond",emoji:"🔫"},     b:{name:"Ethan Hunt",emoji:"💣"} },
+    { a:{name:"Elsa",emoji:"❄️"},           b:{name:"Rapunzel",emoji:"🌸"} },
+    { a:{name:"Gandalf",emoji:"🧙"},        b:{name:"Dumbledore",emoji:"🦅"} },
+    { a:{name:"Indiana Jones",emoji:"🤠"},  b:{name:"Lara Croft",emoji:"💎"} },
+    { a:{name:"Le Joker",emoji:"🃏"},       b:{name:"Loki",emoji:"🐍"} },
+    { a:{name:"Captain America",emoji:"🛡️"},b:{name:"Superman",emoji:"🦸"} },
+    { a:{name:"Sherlock Holmes",emoji:"🔍"},b:{name:"Hercule Poirot",emoji:"🧐"} },
+    { a:{name:"Tony Stark",emoji:"🤖"},     b:{name:"Elon Musk",emoji:"🚀"} },
+    { a:{name:"Simba",emoji:"🦁"},          b:{name:"Bambi",emoji:"🦌"} },
+    { a:{name:"Shrek",emoji:"🧅"},          b:{name:"Donkey",emoji:"🐴"} },
+    { a:{name:"Deadpool",emoji:"🗡️"},       b:{name:"Wolverine",emoji:"🐺"} },
+    { a:{name:"Pikachu",emoji:"⚡"},        b:{name:"Stitch",emoji:"💙"} },
+    { a:{name:"Jack Sparrow",emoji:"🏴‍☠️"},  b:{name:"Will Turner",emoji:"⚓"} },
+    { a:{name:"Gollum",emoji:"💍"},         b:{name:"Dobby",emoji:"🧦"} },
+  ];
+
+  let numPlayers = 5;
+  let currentPair = null;
+  let assignments = [];
+  let currentPlayer = 0;
+  let countdownTimer = null;
+
+  const screens = {
+    intro: document.getElementById('screen-intro'),
+    waiting: document.getElementById('screen-waiting'),
+    reveal: document.getElementById('screen-reveal'),
+    gameon: document.getElementById('screen-gameon'),
+  };
+
+  function showScreen(name) {
+    Object.values(screens).forEach(s => s.classList.add('hidden'));
+    screens[name].classList.remove('hidden');
+  }
+
+  function pickRandomPair() {
+    currentPair = PAIRS[Math.floor(Math.random() * PAIRS.length)];
+    document.getElementById('name-a').textContent = currentPair.a.name;
+    document.getElementById('name-b').textContent = currentPair.b.name;
+  }
+  pickRandomPair();
+
+  function updateUndercoverNote() {
+    const n = numPlayers >= 7 ? 2 : 1;
+    document.getElementById('undercover-note').innerHTML =
+      `${n} joueur${n>1?'s':''} ser${n>1?'ont':'a'} <span>Undercover</span>`;
+  }
+
+  document.getElementById('btn-minus').addEventListener('click', () => {
+    if (numPlayers > 3) { numPlayers--; document.getElementById('player-count').textContent = numPlayers; updateUndercoverNote(); }
+  });
+  document.getElementById('btn-plus').addEventListener('click', () => {
+    if (numPlayers < 10) { numPlayers++; document.getElementById('player-count').textContent = numPlayers; updateUndercoverNote(); }
+  });
+
+  document.getElementById('btn-start').addEventListener('click', startGame);
+
+  function startGame() {
+    pickRandomPair();
+    const numUndercover = numPlayers >= 7 ? 2 : 1;
+    assignments = [];
+    const shuffled = Array.from({length: numPlayers}, (_, i) => i).sort(() => Math.random() - 0.5);
+    const undercoverPos = new Set(shuffled.slice(0, numUndercover));
+    for (let i = 0; i < numPlayers; i++) {
+      assignments.push(undercoverPos.has(i)
+        ? {...currentPair.b, role:'undercover'}
+        : {...currentPair.a, role:'citizen'});
+    }
+    currentPlayer = 0;
+    showWaiting();
+  }
+
+  function showWaiting() {
+    const p = currentPlayer + 1;
+    document.getElementById('waiting-num').textContent = p;
+    document.getElementById('waiting-badge').textContent = p;
+    const dots = document.getElementById('progress-dots');
+    dots.innerHTML = '';
+    for (let i = 0; i < numPlayers; i++) {
+      const d = document.createElement('div');
+      d.className = 'dot' + (i < currentPlayer ? ' done' : i === currentPlayer ? ' active' : '');
+      dots.appendChild(d);
+    }
+    showScreen('waiting');
+  }
+
+  document.getElementById('btn-reveal').addEventListener('click', showReveal);
+
+  function showReveal() {
+    const a = assignments[currentPlayer];
+    const p = currentPlayer + 1;
+    document.getElementById('reveal-header').textContent = `Joueur ${p} — Lis et mémorise !`;
+    document.getElementById('char-emoji').textContent = a.emoji;
+    document.getElementById('char-name').textContent = a.name;
+    const roleTag = document.getElementById('role-tag');
+    if (a.role === 'undercover') {
+      roleTag.textContent = '🕵️ Undercover';
+      roleTag.className = 'role-tag undercover';
+    } else {
+      roleTag.textContent = '👤 Citoyen';
+      roleTag.className = 'role-tag citizen';
+    }
+    const card = document.getElementById('reveal-card');
+    card.style.animation = 'none';
+    void card.offsetWidth;
+    card.style.animation = '';
+    showScreen('reveal');
+    startCountdown(7);
+  }
+
+  function startCountdown(seconds) {
+    clearInterval(countdownTimer);
+    let remaining = seconds;
+    const ringFg = document.getElementById('ring-fg');
+    const ringNum = document.getElementById('ring-num');
+    const circumference = 220;
+
+    function update() {
+      ringNum.textContent = remaining;
+      ringFg.style.strokeDashoffset = circumference * (1 - remaining / seconds);
+      ringFg.style.stroke = remaining <= 2 ? '#ec4899' : remaining <= 4 ? '#f59e0b' : '#7c3aed';
+    }
+    update();
+
+    countdownTimer = setInterval(() => {
+      remaining--;
+      update();
+      if (remaining <= 0) {
+        clearInterval(countdownTimer);
+        spawnParticles();
+        currentPlayer++;
+        setTimeout(() => currentPlayer >= numPlayers ? showScreen('gameon') : showWaiting(), 400);
+      }
+    }, 1000);
+  }
+
+  function spawnParticles() {
+    const burst = document.createElement('div');
+    burst.className = 'burst';
+    document.body.appendChild(burst);
+    const colors = ['#7c3aed','#ec4899','#3b82f6','#facc15','#34d399'];
+    const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+    for (let i = 0; i < 20; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const angle = (i / 20) * Math.PI * 2;
+      const dist = 80 + Math.random() * 100;
+      p.style.cssText = `left:${cx}px;top:${cy}px;background:${colors[i%colors.length]};--dx:${Math.cos(angle)*dist}px;--dy:${Math.sin(angle)*dist}px;animation-duration:${0.6+Math.random()*0.4}s;`;
+      burst.appendChild(p);
+    }
+    setTimeout(() => burst.remove(), 1200);
+  }
+
+  document.getElementById('btn-newgame').addEventListener('click', () => {
+    showScreen('intro');
+    pickRandomPair();
+  });
+
+  document.getElementById('btn-reveal-answers').addEventListener('click', () => {
+    const lines = assignments.map((a, i) =>
+      `Joueur ${i+1}: ${a.emoji} ${a.name} (${a.role === 'undercover' ? '🕵️ Undercover' : '👤 Citoyen'})`
+    ).join('\n');
+    alert(lines);
+  });
+
+  showScreen('intro');
+</script>
+</body>
 </html>
