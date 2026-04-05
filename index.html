@@ -820,6 +820,12 @@
     <div class="role-tag citizen" id="result-role">👤 Citoyen</div>
     <div class="result-detail" id="result-detail">C'était bien l'Undercover !</div>
   </div>
+  <div class="result-char-card" id="undercover-reveal" style="display:none; border: 1px solid rgba(236,72,153,0.3);">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:rgba(236,72,153,0.8);margin-bottom:12px;">🕵️ Le vrai Undercover</div>
+    <span class="char-emoji" id="undercover-reveal-emoji">🕷️</span>
+    <div class="char-name shimmer" id="undercover-reveal-name">Spider-Man</div>
+    <div style="font-size:14px;color:rgba(255,255,255,0.5);margin-top:8px;" id="undercover-reveal-player">C'était Hani</div>
+  </div>
   <button class="btn-primary" id="btn-play-again">Rejouer 🚀</button>
 </div>
 
@@ -1304,18 +1310,28 @@
     document.getElementById('result-char').textContent = eliminatedAssignment.name;
 
     const roleTag = document.getElementById('result-role');
+    const undercoverReveal = document.getElementById('undercover-reveal');
+
     if (isUndercover) {
       roleTag.textContent = '🕵️ Undercover';
       roleTag.className = 'role-tag undercover';
       document.getElementById('result-detail').textContent = `C'était bien l'Undercover !`;
       document.getElementById('result-banner').textContent = '🎉 Les citoyens gagnent !';
       document.getElementById('result-banner').className = 'result-win-banner citizens';
+      undercoverReveal.style.display = 'none';
     } else {
       roleTag.textContent = '👤 Citoyen';
       roleTag.className = 'role-tag citizen';
       document.getElementById('result-detail').textContent = `L'Undercover s'en est sorti !`;
       document.getElementById('result-banner').textContent = '🕵️ L\'Undercover gagne !';
       document.getElementById('result-banner').className = 'result-win-banner undercover';
+      // Reveal the real undercover
+      const undercoverIndex = assignments.findIndex(a => a.role === 'undercover');
+      const undercoverAssignment = assignments[undercoverIndex];
+      document.getElementById('undercover-reveal-emoji').textContent = undercoverAssignment.emoji;
+      document.getElementById('undercover-reveal-name').textContent = undercoverAssignment.name;
+      document.getElementById('undercover-reveal-player').textContent = `C'était ${getPlayerName(undercoverIndex)}`;
+      undercoverReveal.style.display = 'block';
     }
 
     spawnParticles();
