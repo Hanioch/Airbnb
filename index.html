@@ -539,7 +539,7 @@
       stroke-linecap: round;
       stroke-dasharray: 502;
       stroke-dashoffset: 0;
-      transition: stroke-dashoffset 1s linear, stroke 1s;
+      transition: stroke none;
     }
     .debate-time {
       position: absolute;
@@ -734,7 +734,6 @@
 
   <div class="card-wrap">
     <div class="card" id="reveal-card">
-      <div class="role-tag citizen" id="role-tag">Citoyen</div>
       <span class="char-emoji" id="char-emoji">🦸</span>
       <div class="char-name shimmer" id="char-name">Batman</div>
       <div class="char-hint">Décris ce personnage <strong>sans dire son nom</strong> ni son univers exact.</div>
@@ -1053,14 +1052,6 @@
     document.getElementById('reveal-header').textContent = `${getPlayerName(currentPlayer)} — Lis et mémorise !`;
     document.getElementById('char-emoji').textContent = a.emoji;
     document.getElementById('char-name').textContent = a.name;
-    const roleTag = document.getElementById('role-tag');
-    if (a.role === 'undercover') {
-      roleTag.textContent = '🕵️ Undercover';
-      roleTag.className = 'role-tag undercover';
-    } else {
-      roleTag.textContent = '👤 Citoyen';
-      roleTag.className = 'role-tag citizen';
-    }
     const card = document.getElementById('reveal-card');
     card.style.animation = 'none';
     void card.offsetWidth;
@@ -1169,19 +1160,23 @@
     let remaining = totalSeconds;
     const circumference = 502;
     const ringFg = document.getElementById('debate-ring-fg');
+    const timeDisplay = document.getElementById('debate-time-display');
+    const label = document.querySelector('.debate-time-label');
 
     function update() {
+      if (remaining < 0) remaining = 0;
       const m = Math.floor(remaining / 60);
       const s = remaining % 60;
-      document.getElementById('debate-time-display').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+      timeDisplay.textContent = `${m}:${s.toString().padStart(2, '0')}`;
       const fraction = remaining / totalSeconds;
-      ringFg.style.strokeDashoffset = circumference * (1 - fraction);
-      if (fraction < 0.25) ringFg.style.stroke = '#ec4899';
-      else if (fraction < 0.5) ringFg.style.stroke = '#f59e0b';
-      else ringFg.style.stroke = '#7c3aed';
+      ringFg.setAttribute('stroke-dashoffset', circumference * (1 - fraction));
+      if (fraction < 0.25) ringFg.setAttribute('stroke', '#ec4899');
+      else if (fraction < 0.5) ringFg.setAttribute('stroke', '#f59e0b');
+      else ringFg.setAttribute('stroke', '#7c3aed');
     }
-    ringFg.style.strokeDashoffset = 0;
-    ringFg.style.stroke = '#7c3aed';
+
+    ringFg.setAttribute('stroke-dashoffset', '0');
+    ringFg.setAttribute('stroke', '#7c3aed');
     update();
 
     clearInterval(debateTimer);
@@ -1190,7 +1185,14 @@
       update();
       if (remaining <= 0) {
         clearInterval(debateTimer);
-        startCountdown321();
+        // Show "Fin du débat" briefly then alarm + 321
+        timeDisplay.textContent = '0:00';
+        label.textContent = 'Fin du débat !';
+        playAlarm();
+        setTimeout(() => {
+          label.textContent = 'restantes';
+          startCountdown321();
+        }, 2000);
       }
     }, 1000);
   }
