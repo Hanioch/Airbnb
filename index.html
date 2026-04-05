@@ -539,7 +539,6 @@
       stroke-linecap: round;
       stroke-dasharray: 502;
       stroke-dashoffset: 0;
-      transition: stroke none;
     }
     .debate-time {
       position: absolute;
@@ -955,16 +954,9 @@
   let currentPlayer = 0;
   let countdownTimer = null;
 
-  const screens = {
-    intro: document.getElementById('screen-intro'),
-    waiting: document.getElementById('screen-waiting'),
-    reveal: document.getElementById('screen-reveal'),
-    gameon: document.getElementById('screen-gameon'),
-  };
-
   function showScreen(name) {
-    Object.values(screens).forEach(s => s.classList.add('hidden'));
-    screens[name].classList.remove('hidden');
+    document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+    document.getElementById('screen-' + name).classList.remove('hidden');
   }
 
   function pickRandomPair() {
