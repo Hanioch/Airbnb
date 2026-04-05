@@ -147,27 +147,50 @@
     }
     .undercover-note span { color: var(--pink); font-weight: 600; }
 
-    .pair-preview {
+    .names-section {
       background: var(--card);
       border-radius: 20px;
-      padding: 18px 24px;
+      padding: 16px 20px;
       width: 100%;
       max-width: 320px;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
-    .pair-label { font-size: 12px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
-    .pair-names {
+    .names-label {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+      text-align: center;
+    }
+    .name-row {
       display: flex;
       align-items: center;
-      justify-content: center;
       gap: 10px;
+    }
+    .name-num {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 800; flex-shrink: 0;
+    }
+    .name-input {
+      flex: 1;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 9px 12px;
+      color: #fff;
       font-size: 15px;
       font-weight: 600;
+      font-family: inherit;
+      transition: border-color 0.15s;
     }
-    .pair-vs { color: var(--pink); font-size: 12px; }
-    .pair-name-a { color: var(--blue); }
-    .pair-name-b { color: var(--purple); }
+    .name-input:focus { outline: none; border-color: var(--purple); background: rgba(255,255,255,0.09); }
+    .name-input::placeholder { color: rgba(255,255,255,0.25); font-weight: 400; }
 
     .btn-primary {
       width: 100%;
@@ -524,13 +547,8 @@
     <div class="undercover-note" id="undercover-note">1 joueur sera <span>Undercover</span></div>
   </div>
 
-  <div class="pair-preview">
-    <div class="pair-label">Duo du moment</div>
-    <div class="pair-names">
-      <span class="pair-name-a" id="name-a">—</span>
-      <span class="pair-vs">VS</span>
-      <span class="pair-name-b" id="name-b">—</span>
-    </div>
+  <div class="names-section" id="names-section">
+    <div class="names-label">Prénoms</div>
   </div>
 
   <button class="btn-primary" id="btn-start">Lancer la partie 🚀</button>
@@ -540,7 +558,7 @@
 <div class="screen hidden" id="screen-waiting">
   <div class="player-badge" id="waiting-badge">1</div>
   <div>
-    <div class="waiting-title">Joueur <span id="waiting-num">1</span></div>
+    <div class="waiting-title"><span id="waiting-num">1</span></div>
     <div class="waiting-sub" style="margin-top:8px">Passe le téléphone. Quand tu es prêt·e, appuie sur le bouton.</div>
   </div>
   <div class="progress-dots" id="progress-dots"></div>
@@ -716,6 +734,7 @@
   ];
 
   let numPlayers = 5;
+  let playerNames = ["Hani", "Momo", "Mohcine", "Val", "Karim", "Joueur 6", "Joueur 7", "Joueur 8", "Joueur 9", "Joueur 10"];
   let currentPair = null;
   let assignments = [];
   let currentPlayer = 0;
@@ -738,6 +757,34 @@
   }
   pickRandomPair();
 
+  function getPlayerName(i) {
+    return (playerNames[i] && playerNames[i].trim()) ? playerNames[i].trim() : `Joueur ${i + 1}`;
+  }
+
+  function renderNameInputs() {
+    const section = document.getElementById('names-section');
+    section.innerHTML = '<div class="names-label">Prénoms</div>';
+    for (let i = 0; i < numPlayers; i++) {
+      const row = document.createElement('div');
+      row.className = 'name-row';
+      const num = document.createElement('div');
+      num.className = 'name-num';
+      num.textContent = i + 1;
+      const input = document.createElement('input');
+      input.className = 'name-input';
+      input.type = 'text';
+      input.maxLength = 16;
+      input.placeholder = `Joueur ${i + 1}`;
+      input.value = playerNames[i] || '';
+      input.dataset.index = i;
+      input.addEventListener('input', e => { playerNames[e.target.dataset.index] = e.target.value; });
+      row.appendChild(num);
+      row.appendChild(input);
+      section.appendChild(row);
+    }
+  }
+  renderNameInputs();
+
   function updateUndercoverNote() {
     const n = numPlayers >= 7 ? 2 : 1;
     document.getElementById('undercover-note').innerHTML =
@@ -745,10 +792,10 @@
   }
 
   document.getElementById('btn-minus').addEventListener('click', () => {
-    if (numPlayers > 3) { numPlayers--; document.getElementById('player-count').textContent = numPlayers; updateUndercoverNote(); }
+    if (numPlayers > 3) { numPlayers--; document.getElementById('player-count').textContent = numPlayers; updateUndercoverNote(); renderNameInputs(); }
   });
   document.getElementById('btn-plus').addEventListener('click', () => {
-    if (numPlayers < 10) { numPlayers++; document.getElementById('player-count').textContent = numPlayers; updateUndercoverNote(); }
+    if (numPlayers < 10) { numPlayers++; document.getElementById('player-count').textContent = numPlayers; updateUndercoverNote(); renderNameInputs(); }
   });
 
   document.getElementById('btn-start').addEventListener('click', startGame);
@@ -769,9 +816,9 @@
   }
 
   function showWaiting() {
-    const p = currentPlayer + 1;
-    document.getElementById('waiting-num').textContent = p;
-    document.getElementById('waiting-badge').textContent = p;
+    const name = getPlayerName(currentPlayer);
+    document.getElementById('waiting-num').textContent = name;
+    document.getElementById('waiting-badge').textContent = name.charAt(0).toUpperCase();
     const dots = document.getElementById('progress-dots');
     dots.innerHTML = '';
     for (let i = 0; i < numPlayers; i++) {
@@ -787,7 +834,7 @@
   function showReveal() {
     const a = assignments[currentPlayer];
     const p = currentPlayer + 1;
-    document.getElementById('reveal-header').textContent = `Joueur ${p} — Lis et mémorise !`;
+    document.getElementById('reveal-header').textContent = `${getPlayerName(currentPlayer)} — Lis et mémorise !`;
     document.getElementById('char-emoji').textContent = a.emoji;
     document.getElementById('char-name').textContent = a.name;
     const roleTag = document.getElementById('role-tag');
@@ -861,7 +908,7 @@
       const item = document.createElement('div');
       item.className = 'order-item';
       item.style.animationDelay = `${pos * 0.05}s`;
-      item.innerHTML = `<div class="order-pos">${pos + 1}</div><div class="order-name">Joueur ${player}</div>`;
+      item.innerHTML = `<div class="order-pos">${pos + 1}</div><div class="order-name">${getPlayerName(player - 1)}</div>`;
       list.appendChild(item);
     });
   }
@@ -875,7 +922,7 @@
 
   document.getElementById('btn-reveal-answers').addEventListener('click', () => {
     const lines = assignments.map((a, i) =>
-      `Joueur ${i+1}: ${a.emoji} ${a.name} (${a.role === 'undercover' ? '🕵️ Undercover' : '👤 Citoyen'})`
+      `${getPlayerName(i)}: ${a.emoji} ${a.name} (${a.role === 'undercover' ? '🕵️ Undercover' : '👤 Citoyen'})`
     ).join('\n');
     alert(lines);
   });
