@@ -491,9 +491,166 @@
     .btn-shuffle:active { background: rgba(255,255,255,0.06); transform: scale(0.97); }
 
     /* Screens with little content stay centered */
-    #screen-waiting, #screen-reveal, #screen-gameon {
+    #screen-waiting, #screen-reveal, #screen-gameon,
+    #screen-debate, #screen-321, #screen-vote, #screen-result {
       justify-content: center;
     }
+
+    /* ========== GAMEON — timer selector ========== */
+    .time-selector {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 4px;
+    }
+    .time-btn {
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.6);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .time-btn.active {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      border-color: transparent;
+      color: #fff;
+    }
+    .time-btn:active { transform: scale(0.95); }
+
+    /* ========== DEBATE SCREEN ========== */
+    .debate-title { font-size: 26px; font-weight: 800; text-align: center; }
+    .debate-sub { font-size: 14px; color: rgba(255,255,255,0.45); text-align: center; }
+    .debate-ring-wrap {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin: 8px 0;
+    }
+    .debate-ring-wrap svg { width: 180px; height: 180px; transform: rotate(-90deg); }
+    .debate-ring-bg { fill: none; stroke: rgba(255,255,255,0.08); stroke-width: 8; }
+    .debate-ring-fg {
+      fill: none;
+      stroke: var(--purple);
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-dasharray: 502;
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 1s linear, stroke 1s;
+    }
+    .debate-time {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+    .debate-time-label { font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; margin-top: -4px; }
+    .btn-skip {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.5);
+      padding: 12px 32px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-skip:active { transform: scale(0.96); background: rgba(255,255,255,0.1); }
+
+    /* ========== 3-2-1 SCREEN ========== */
+    .big-num {
+      font-size: 120px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      animation: pop-big 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes pop-big {
+      from { transform: scale(0.3); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .big-num-label { font-size: 18px; color: rgba(255,255,255,0.5); margin-top: 8px; text-align: center; }
+
+    /* ========== VOTE SCREEN ========== */
+    .vote-title { font-size: 22px; font-weight: 800; text-align: center; line-height: 1.3; }
+    .vote-sub { font-size: 13px; color: rgba(255,255,255,0.45); text-align: center; }
+    .vote-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      max-width: 320px;
+    }
+    .vote-btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .vote-btn:active { transform: scale(0.97); background: rgba(124,58,237,0.2); border-color: var(--purple); }
+    .vote-btn-emoji { font-size: 22px; }
+    .vote-progress {
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      text-align: center;
+    }
+
+    /* ========== RESULT SCREEN ========== */
+    .result-verdict {
+      font-size: 22px;
+      font-weight: 800;
+      text-align: center;
+      line-height: 1.3;
+    }
+    .result-char-card {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 28px 24px;
+      text-align: center;
+      width: 100%;
+      max-width: 320px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .result-win-banner {
+      font-size: 28px;
+      font-weight: 900;
+      text-align: center;
+      animation: float 2s ease-in-out infinite;
+    }
+    .result-win-banner.citizens {
+      background: linear-gradient(135deg, #34d399, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .result-win-banner.undercover {
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .result-detail { font-size: 14px; color: rgba(255,255,255,0.5); text-align: center; line-height: 1.6; }
 
     .burst {
       position: fixed;
@@ -606,10 +763,66 @@
     <button class="btn-shuffle" id="btn-shuffle">🔀 Nouvel ordre</button>
   </div>
 
+  <div style="text-align:center;width:100%;max-width:320px;">
+    <div style="font-size:12px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Durée du débat</div>
+    <div class="time-selector">
+      <button class="time-btn" data-min="2">2 min</button>
+      <button class="time-btn active" data-min="3">3 min</button>
+      <button class="time-btn" data-min="5">5 min</button>
+    </div>
+  </div>
+
+  <button class="btn-primary" id="btn-start-debate">⏱️ Lancer le débat</button>
+
   <div class="btn-row">
     <button class="btn-secondary" id="btn-reveal-answers">Voir les rôles</button>
-    <button class="btn-primary" id="btn-newgame">Rejouer</button>
+    <button class="btn-secondary" id="btn-newgame">Rejouer</button>
   </div>
+</div>
+
+<!-- DEBATE -->
+<div class="screen hidden" id="screen-debate">
+  <div class="debate-title">Débattez !</div>
+  <div class="debate-sub">Décrivez votre personnage sans le nommer</div>
+  <div class="debate-ring-wrap">
+    <svg viewBox="0 0 180 180">
+      <circle class="debate-ring-bg" cx="90" cy="90" r="80"/>
+      <circle class="debate-ring-fg" cx="90" cy="90" r="80" id="debate-ring-fg"/>
+    </svg>
+    <div class="debate-time">
+      <span id="debate-time-display">3:00</span>
+      <span class="debate-time-label">restantes</span>
+    </div>
+  </div>
+  <button class="btn-skip" id="btn-skip-debate">Passer au vote →</button>
+</div>
+
+<!-- 3-2-1 -->
+<div class="screen hidden" id="screen-321">
+  <div class="big-num" id="big-num">3</div>
+  <div class="big-num-label" id="big-num-label">Préparez-vous à voter !</div>
+</div>
+
+<!-- VOTE -->
+<div class="screen hidden" id="screen-vote">
+  <div class="player-badge" id="vote-badge">H</div>
+  <div class="vote-title" id="vote-title">Qui est l'Undercover ?</div>
+  <div class="vote-sub" id="vote-sub">Hani vote</div>
+  <div class="vote-grid" id="vote-grid"></div>
+  <div class="vote-progress" id="vote-progress">Vote 1 / 5</div>
+</div>
+
+<!-- RESULT -->
+<div class="screen hidden" id="screen-result">
+  <div class="result-win-banner citizens" id="result-banner">🎉 Citoyens gagnent !</div>
+  <div class="result-verdict" id="result-verdict">Mohcine a été éliminé</div>
+  <div class="result-char-card">
+    <span class="char-emoji" id="result-emoji">🦇</span>
+    <div class="char-name shimmer" id="result-char">Batman</div>
+    <div class="role-tag citizen" id="result-role">👤 Citoyen</div>
+    <div class="result-detail" id="result-detail">C'était bien l'Undercover !</div>
+  </div>
+  <button class="btn-primary" id="btn-play-again">Rejouer 🚀</button>
 </div>
 
 <script>
@@ -919,6 +1132,7 @@
   document.getElementById('btn-shuffle').addEventListener('click', shuffleOrder);
 
   document.getElementById('btn-newgame').addEventListener('click', () => {
+    clearInterval(debateTimer);
     showScreen('intro');
     pickRandomPair();
   });
@@ -928,6 +1142,196 @@
       `${getPlayerName(i)}: ${a.emoji} ${a.name} (${a.role === 'undercover' ? '🕵️ Undercover' : '👤 Citoyen'})`
     ).join('\n');
     alert(lines);
+  });
+
+  // ── Timer selector ────────────────────────────────────────
+  let debateMinutes = 3;
+  document.querySelectorAll('.time-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      debateMinutes = parseInt(btn.dataset.min);
+    });
+  });
+
+  // ── Debate ────────────────────────────────────────────────
+  let debateTimer = null;
+
+  document.getElementById('btn-start-debate').addEventListener('click', startDebate);
+  document.getElementById('btn-skip-debate').addEventListener('click', () => {
+    clearInterval(debateTimer);
+    startCountdown321();
+  });
+
+  function startDebate() {
+    showScreen('debate');
+    const totalSeconds = debateMinutes * 60;
+    let remaining = totalSeconds;
+    const circumference = 502;
+    const ringFg = document.getElementById('debate-ring-fg');
+
+    function update() {
+      const m = Math.floor(remaining / 60);
+      const s = remaining % 60;
+      document.getElementById('debate-time-display').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+      const fraction = remaining / totalSeconds;
+      ringFg.style.strokeDashoffset = circumference * (1 - fraction);
+      if (fraction < 0.25) ringFg.style.stroke = '#ec4899';
+      else if (fraction < 0.5) ringFg.style.stroke = '#f59e0b';
+      else ringFg.style.stroke = '#7c3aed';
+    }
+    ringFg.style.strokeDashoffset = 0;
+    ringFg.style.stroke = '#7c3aed';
+    update();
+
+    clearInterval(debateTimer);
+    debateTimer = setInterval(() => {
+      remaining--;
+      update();
+      if (remaining <= 0) {
+        clearInterval(debateTimer);
+        startCountdown321();
+      }
+    }, 1000);
+  }
+
+  // ── Sound ─────────────────────────────────────────────────
+  function playBeep(freq, duration, delay = 0) {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      setTimeout(() => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.frequency.value = freq;
+        osc.type = 'sine';
+        gain.gain.setValueAtTime(0.4, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + duration);
+      }, delay);
+    } catch(e) {}
+  }
+  function playAlarm() {
+    playBeep(523, 0.15, 0);
+    playBeep(659, 0.15, 180);
+    playBeep(784, 0.15, 360);
+    playBeep(1047, 0.5, 540);
+  }
+  function playTick(high = false) {
+    playBeep(high ? 880 : 660, 0.08, 0);
+  }
+
+  // ── 3-2-1 countdown ──────────────────────────────────────
+  function startCountdown321() {
+    showScreen('321');
+    const steps = [
+      { num: '3', label: 'Préparez-vous à voter !', sound: () => playTick() },
+      { num: '2', label: 'Préparez-vous à voter !', sound: () => playTick() },
+      { num: '1', label: 'Préparez-vous à voter !', sound: () => playTick(true) },
+      { num: '🗳️', label: 'Votez !', sound: () => playAlarm() },
+    ];
+    let i = 0;
+    function step() {
+      if (i >= steps.length) { initVote(); return; }
+      const el = document.getElementById('big-num');
+      const lb = document.getElementById('big-num-label');
+      el.style.animation = 'none';
+      void el.offsetWidth;
+      el.style.animation = 'pop-big 0.4s cubic-bezier(0.34,1.56,0.64,1) both';
+      el.textContent = steps[i].num;
+      lb.textContent = steps[i].label;
+      steps[i].sound();
+      i++;
+      if (i < steps.length) setTimeout(step, 1000);
+      else setTimeout(() => { initVote(); }, 1200);
+    }
+    step();
+  }
+
+  // ── Vote ──────────────────────────────────────────────────
+  let votes = [];       // votes[voterIndex] = votedIndex
+  let currentVoter = 0;
+
+  function initVote() {
+    votes = new Array(numPlayers).fill(-1);
+    currentVoter = 0;
+    showVoteScreen();
+  }
+
+  function showVoteScreen() {
+    showScreen('vote');
+    const name = getPlayerName(currentVoter);
+    document.getElementById('vote-badge').textContent = name.charAt(0).toUpperCase();
+    document.getElementById('vote-sub').textContent = `${name} vote`;
+    document.getElementById('vote-progress').textContent = `Vote ${currentVoter + 1} / ${numPlayers}`;
+
+    const grid = document.getElementById('vote-grid');
+    grid.innerHTML = '';
+    for (let i = 0; i < numPlayers; i++) {
+      if (i === currentVoter) continue; // can't vote for yourself
+      const btn = document.createElement('button');
+      btn.className = 'vote-btn';
+      btn.innerHTML = `<span class="vote-btn-emoji">👤</span><span>${getPlayerName(i)}</span>`;
+      btn.addEventListener('click', () => castVote(i));
+      grid.appendChild(btn);
+    }
+  }
+
+  function castVote(targetIndex) {
+    votes[currentVoter] = targetIndex;
+    playTick();
+    currentVoter++;
+    if (currentVoter >= numPlayers) {
+      showResult();
+    } else {
+      // Brief black screen before next voter
+      showScreen('321');
+      document.getElementById('big-num').textContent = '👁️';
+      document.getElementById('big-num-label').textContent = `Passe à ${getPlayerName(currentVoter)}`;
+      setTimeout(showVoteScreen, 1200);
+    }
+  }
+
+  // ── Result ────────────────────────────────────────────────
+  function showResult() {
+    // Count votes
+    const tally = new Array(numPlayers).fill(0);
+    votes.forEach(v => { if (v >= 0) tally[v]++; });
+    const maxVotes = Math.max(...tally);
+    const eliminated = tally.indexOf(maxVotes);
+
+    const eliminatedAssignment = assignments[eliminated];
+    const isUndercover = eliminatedAssignment.role === 'undercover';
+
+    document.getElementById('result-verdict').textContent = `${getPlayerName(eliminated)} est éliminé${maxVotes > 1 ? ` (${maxVotes} votes)` : ''}`;
+    document.getElementById('result-emoji').textContent = eliminatedAssignment.emoji;
+    document.getElementById('result-char').textContent = eliminatedAssignment.name;
+
+    const roleTag = document.getElementById('result-role');
+    if (isUndercover) {
+      roleTag.textContent = '🕵️ Undercover';
+      roleTag.className = 'role-tag undercover';
+      document.getElementById('result-detail').textContent = `C'était bien l'Undercover !`;
+      document.getElementById('result-banner').textContent = '🎉 Les citoyens gagnent !';
+      document.getElementById('result-banner').className = 'result-win-banner citizens';
+    } else {
+      roleTag.textContent = '👤 Citoyen';
+      roleTag.className = 'role-tag citizen';
+      document.getElementById('result-detail').textContent = `L'Undercover s'en est sorti !`;
+      document.getElementById('result-banner').textContent = '🕵️ L\'Undercover gagne !';
+      document.getElementById('result-banner').className = 'result-win-banner undercover';
+    }
+
+    spawnParticles();
+    showScreen('result');
+  }
+
+  document.getElementById('btn-play-again').addEventListener('click', () => {
+    clearInterval(debateTimer);
+    showScreen('intro');
+    pickRandomPair();
   });
 
   showScreen('intro');
