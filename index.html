@@ -603,25 +603,116 @@
   }
 
   const PAIRS = [
-    { a:{name:"Batman",emoji:"🦇"},        b:{name:"Spider-Man",emoji:"🕷️"} },
-    { a:{name:"Hermione",emoji:"🪄"},       b:{name:"Katniss Everdeen",emoji:"🏹"} },
-    { a:{name:"Darth Vader",emoji:"⚔️"},    b:{name:"Voldemort",emoji:"🐍"} },
-    { a:{name:"Mario",emoji:"🍄"},          b:{name:"Sonic",emoji:"💨"} },
-    { a:{name:"Harry Potter",emoji:"⚡"},   b:{name:"Percy Jackson",emoji:"🔱"} },
-    { a:{name:"James Bond",emoji:"🔫"},     b:{name:"Ethan Hunt",emoji:"💣"} },
-    { a:{name:"Elsa",emoji:"❄️"},           b:{name:"Rapunzel",emoji:"🌸"} },
-    { a:{name:"Gandalf",emoji:"🧙"},        b:{name:"Dumbledore",emoji:"🦅"} },
-    { a:{name:"Indiana Jones",emoji:"🤠"},  b:{name:"Lara Croft",emoji:"💎"} },
-    { a:{name:"Le Joker",emoji:"🃏"},       b:{name:"Loki",emoji:"🐍"} },
-    { a:{name:"Captain America",emoji:"🛡️"},b:{name:"Superman",emoji:"🦸"} },
-    { a:{name:"Sherlock Holmes",emoji:"🔍"},b:{name:"Hercule Poirot",emoji:"🧐"} },
-    { a:{name:"Tony Stark",emoji:"🤖"},     b:{name:"Elon Musk",emoji:"🚀"} },
-    { a:{name:"Simba",emoji:"🦁"},          b:{name:"Bambi",emoji:"🦌"} },
-    { a:{name:"Shrek",emoji:"🧅"},          b:{name:"Donkey",emoji:"🐴"} },
-    { a:{name:"Deadpool",emoji:"🗡️"},       b:{name:"Wolverine",emoji:"🐺"} },
-    { a:{name:"Pikachu",emoji:"⚡"},        b:{name:"Stitch",emoji:"💙"} },
-    { a:{name:"Jack Sparrow",emoji:"🏴‍☠️"},  b:{name:"Will Turner",emoji:"⚓"} },
-    { a:{name:"Gollum",emoji:"💍"},         b:{name:"Dobby",emoji:"🧦"} },
+    // Héros / Super-héros
+    { a:{name:"Batman",emoji:"🦇"},           b:{name:"Spider-Man",emoji:"🕷️"} },
+    { a:{name:"Batman",emoji:"🦇"},           b:{name:"Zorro",emoji:"🗡️"} },
+    { a:{name:"Superman",emoji:"🦸"},         b:{name:"Captain America",emoji:"🛡️"} },
+    { a:{name:"Thor",emoji:"⚡"},             b:{name:"Hercule",emoji:"💪"} },
+    { a:{name:"Iron Man",emoji:"🤖"},         b:{name:"Batman",emoji:"🦇"} },
+    { a:{name:"Wonder Woman",emoji:"🌟"},     b:{name:"Black Widow",emoji:"🕷️"} },
+    { a:{name:"Deadpool",emoji:"🗡️"},         b:{name:"Wolverine",emoji:"🐺"} },
+    { a:{name:"Flash",emoji:"⚡"},            b:{name:"Sonic",emoji:"💨"} },
+    // Sorciers / Magiciens
+    { a:{name:"Gandalf",emoji:"🧙"},          b:{name:"Dumbledore",emoji:"🦅"} },
+    { a:{name:"Merlin",emoji:"🌙"},           b:{name:"Gandalf",emoji:"🧙"} },
+    { a:{name:"Harry Potter",emoji:"⚡"},     b:{name:"Percy Jackson",emoji:"🔱"} },
+    { a:{name:"Hermione",emoji:"🪄"},         b:{name:"Katniss Everdeen",emoji:"🏹"} },
+    { a:{name:"Yoda",emoji:"🟢"},             b:{name:"Dumbledore",emoji:"🦅"} },
+    { a:{name:"Obi-Wan",emoji:"🧙"},          b:{name:"Gandalf",emoji:"🧙"} },
+    // Vilains
+    { a:{name:"Darth Vader",emoji:"⚔️"},      b:{name:"Voldemort",emoji:"🐍"} },
+    { a:{name:"Le Joker",emoji:"🃏"},         b:{name:"Loki",emoji:"🎭"} },
+    { a:{name:"Thanos",emoji:"💜"},           b:{name:"Sauron",emoji:"👁️"} },
+    { a:{name:"Maleficent",emoji:"🧙‍♀️"},      b:{name:"Ursula",emoji:"🐙"} },
+    { a:{name:"Cruella",emoji:"🐾"},          b:{name:"Maleficent",emoji:"🧙‍♀️"} },
+    { a:{name:"Scar",emoji:"🦁"},             b:{name:"Jafar",emoji:"🐍"} },
+    { a:{name:"Voldemort",emoji:"🐍"},        b:{name:"Sauron",emoji:"👁️"} },
+    // Détectives / Espions
+    { a:{name:"Sherlock Holmes",emoji:"🔍"},  b:{name:"Hercule Poirot",emoji:"🧐"} },
+    { a:{name:"James Bond",emoji:"🔫"},       b:{name:"Ethan Hunt",emoji:"💣"} },
+    { a:{name:"Sherlock",emoji:"🎻"},         b:{name:"Columbo",emoji:"🧥"} },
+    { a:{name:"Hannibal Lecter",emoji:"🍷"},  b:{name:"Moriarty",emoji:"♟️"} },
+    // Aventuriers
+    { a:{name:"Indiana Jones",emoji:"🤠"},    b:{name:"Lara Croft",emoji:"💎"} },
+    { a:{name:"Jack Sparrow",emoji:"🏴‍☠️"},    b:{name:"Will Turner",emoji:"⚓"} },
+    { a:{name:"Han Solo",emoji:"🚀"},         b:{name:"Jack Sparrow",emoji:"🏴‍☠️"} },
+    { a:{name:"Aragorn",emoji:"👑"},          b:{name:"Jon Snow",emoji:"❄️"} },
+    { a:{name:"Frodon",emoji:"💍"},           b:{name:"Bilbo",emoji:"🍺"} },
+    { a:{name:"Gollum",emoji:"💍"},           b:{name:"Dobby",emoji:"🧦"} },
+    { a:{name:"Geralt de Riv",emoji:"⚔️"},    b:{name:"Aragorn",emoji:"👑"} },
+    { a:{name:"Robin Hood",emoji:"🏹"},       b:{name:"Zorro",emoji:"🗡️"} },
+    // Star Wars
+    { a:{name:"Luke Skywalker",emoji:"⚡"},   b:{name:"Harry Potter",emoji:"⚡"} },
+    { a:{name:"Le Mandalorien",emoji:"🪖"},   b:{name:"Boba Fett",emoji:"🎯"} },
+    { a:{name:"Darth Vader",emoji:"⚔️"},      b:{name:"Kylo Ren",emoji:"🌑"} },
+    { a:{name:"Rey",emoji:"🌟"},              b:{name:"Katniss Everdeen",emoji:"🏹"} },
+    // Princesses / Héroïnes Disney
+    { a:{name:"Elsa",emoji:"❄️"},             b:{name:"Rapunzel",emoji:"🌸"} },
+    { a:{name:"Mulan",emoji:"🏮"},            b:{name:"Moana",emoji:"🌊"} },
+    { a:{name:"Pocahontas",emoji:"🍃"},       b:{name:"Moana",emoji:"🌊"} },
+    { a:{name:"Belle",emoji:"📚"},            b:{name:"Cendrillon",emoji:"👠"} },
+    { a:{name:"Ariel",emoji:"🧜"},            b:{name:"Elsa",emoji:"❄️"} },
+    { a:{name:"Merida",emoji:"🏹"},           b:{name:"Katniss Everdeen",emoji:"🏹"} },
+    { a:{name:"Tiana",emoji:"🐸"},            b:{name:"Jasmine",emoji:"🧞"} },
+    // Animation / Enfance
+    { a:{name:"Simba",emoji:"🦁"},            b:{name:"Bambi",emoji:"🦌"} },
+    { a:{name:"Shrek",emoji:"🧅"},            b:{name:"Donkey",emoji:"🐴"} },
+    { a:{name:"Buzz Lightyear",emoji:"🚀"},   b:{name:"Woody",emoji:"🤠"} },
+    { a:{name:"Tarzan",emoji:"🌿"},           b:{name:"Mowgli",emoji:"🐯"} },
+    { a:{name:"Aladdin",emoji:"🧞"},          b:{name:"Peter Pan",emoji:"🧚"} },
+    { a:{name:"Pinocchio",emoji:"🪵"},        b:{name:"Dumbo",emoji:"🐘"} },
+    { a:{name:"Stitch",emoji:"💙"},           b:{name:"Pikachu",emoji:"⚡"} },
+    // Séries TV
+    { a:{name:"Walter White",emoji:"🧪"},     b:{name:"Tony Soprano",emoji:"🍕"} },
+    { a:{name:"Jon Snow",emoji:"❄️"},         b:{name:"Aragorn",emoji:"👑"} },
+    { a:{name:"Daenerys",emoji:"🐉"},         b:{name:"Cersei",emoji:"👑"} },
+    { a:{name:"Tyrion Lannister",emoji:"🍷"}, b:{name:"Bilbo",emoji:"🍺"} },
+    { a:{name:"The Boys — Homelander",emoji:"🦅"}, b:{name:"Superman",emoji:"🦸"} },
+    // Jeux vidéo
+    { a:{name:"Mario",emoji:"🍄"},            b:{name:"Sonic",emoji:"💨"} },
+    { a:{name:"Link",emoji:"🗡️"},             b:{name:"Peter Pan",emoji:"🧚"} },
+    { a:{name:"Zelda",emoji:"🔺"},            b:{name:"Elsa",emoji:"❄️"} },
+    { a:{name:"Kratos",emoji:"⚔️"},           b:{name:"Thor",emoji:"⚡"} },
+    { a:{name:"Master Chief",emoji:"🪖"},     b:{name:"Le Mandalorien",emoji:"🪖"} },
+    { a:{name:"Lara Croft",emoji:"💎"},       b:{name:"Nathan Drake",emoji:"🗺️"} },
+    { a:{name:"Cloud Strife",emoji:"⚔️"},     b:{name:"Sephiroth",emoji:"🌑"} },
+    { a:{name:"Arthur Morgan",emoji:"🤠"},    b:{name:"John Marston",emoji:"🏜️"} },
+    { a:{name:"Aloy",emoji:"🏹"},             b:{name:"Katniss Everdeen",emoji:"🏹"} },
+    { a:{name:"Kirby",emoji:"🩷"},            b:{name:"Pac-Man",emoji:"🟡"} },
+    { a:{name:"Ryu",emoji:"🥊"},              b:{name:"Ken",emoji:"🔥"} },
+    { a:{name:"Tony Stark",emoji:"🤖"},       b:{name:"Elon Musk",emoji:"🚀"} },
+    // Manga / Anime — Shonen
+    { a:{name:"Naruto",emoji:"🍥"},           b:{name:"Goku",emoji:"🐉"} },
+    { a:{name:"Luffy",emoji:"🏴‍☠️"},           b:{name:"Naruto",emoji:"🍥"} },
+    { a:{name:"Sasuke",emoji:"🌑"},           b:{name:"Vegeta",emoji:"👑"} },
+    { a:{name:"Goku",emoji:"🐉"},             b:{name:"Saitama",emoji:"👊"} },
+    { a:{name:"Ichigo",emoji:"⚔️"},           b:{name:"Naruto",emoji:"🍥"} },
+    { a:{name:"Deku",emoji:"💚"},             b:{name:"Naruto",emoji:"🍥"} },
+    { a:{name:"Tanjiro",emoji:"🌊"},          b:{name:"Deku",emoji:"💚"} },
+    { a:{name:"Gon",emoji:"🎯"},              b:{name:"Deku",emoji:"💚"} },
+    { a:{name:"Luffy",emoji:"🏴‍☠️"},           b:{name:"Ace",emoji:"🔥"} },
+    { a:{name:"Luffy",emoji:"🏴‍☠️"},           b:{name:"Shanks",emoji:"⚓"} },
+    { a:{name:"Zoro",emoji:"🗡️"},             b:{name:"Kenshin",emoji:"🌸"} },
+    { a:{name:"Kakashi",emoji:"📖"},          b:{name:"Jiraiya",emoji:"🐸"} },
+    { a:{name:"Inosuke",emoji:"🐗"},          b:{name:"Bakugo",emoji:"💥"} },
+    { a:{name:"Zenitsu",emoji:"⚡"},          b:{name:"Usopp",emoji:"🎯"} },
+    { a:{name:"Ryu",emoji:"🥊"},              b:{name:"Goku",emoji:"🐉"} },
+    // Manga — Seinen / Action
+    { a:{name:"Levi Ackerman",emoji:"⚡"},    b:{name:"Killua",emoji:"⚡"} },
+    { a:{name:"Eren Jäger",emoji:"⚙️"},       b:{name:"Guts",emoji:"⚔️"} },
+    { a:{name:"Itachi",emoji:"🪶"},           b:{name:"Aizen",emoji:"🌙"} },
+    { a:{name:"Light Yagami",emoji:"📓"},     b:{name:"Lelouch",emoji:"♟️"} },
+    { a:{name:"L",emoji:"🍰"},               b:{name:"Light Yagami",emoji:"📓"} },
+    { a:{name:"Edward Elric",emoji:"⚗️"},     b:{name:"Alphonse Elric",emoji:"🛡️"} },
+    { a:{name:"Spike Spiegel",emoji:"🚬"},    b:{name:"Vash le Stampede",emoji:"🌹"} },
+    { a:{name:"Guts",emoji:"⚔️"},             b:{name:"Griffith",emoji:"🦅"} },
+    { a:{name:"Mugen",emoji:"🎵"},            b:{name:"Jin",emoji:"⛩️"} },
+    { a:{name:"Madara",emoji:"🌀"},           b:{name:"Aizen",emoji:"🌙"} },
+    // Ghibli
+    { a:{name:"Totoro",emoji:"🌿"},           b:{name:"Pikachu",emoji:"⚡"} },
+    { a:{name:"Chihiro",emoji:"🛁"},          b:{name:"Kiki",emoji:"🧹"} },
+    { a:{name:"Nausicaä",emoji:"🌬️"},        b:{name:"Mononoke",emoji:"🐺"} },
+    { a:{name:"Porco Rosso",emoji:"🐷"},      b:{name:"Jack Sparrow",emoji:"🏴‍☠️"} },
   ];
 
   let numPlayers = 5;
@@ -644,8 +735,6 @@
 
   function pickRandomPair() {
     currentPair = PAIRS[Math.floor(Math.random() * PAIRS.length)];
-    document.getElementById('name-a').textContent = currentPair.a.name;
-    document.getElementById('name-b').textContent = currentPair.b.name;
   }
   pickRandomPair();
 
